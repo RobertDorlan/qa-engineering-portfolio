@@ -102,4 +102,4 @@ No API keys, Cloudflare secrets, private environment files, server-side AI assis
 
 ## Automated QA engineering demo
 
-A runnable **Playwright + TypeScript** suite lives in [`playwright-qa-demo/`](playwright-qa-demo/README.md). It tests a fictional booking sandbox with four independent positive/negative scenarios, Page Object Model, accessibility-first locators, and GitHub Actions CI. No production systems or private project data are involved.
+A runnable **Playwright + TypeScript** suite lives in [`playwright-qa-demo/`](playwright-qa-demo/README.md). It tests a fictional booking sandbox with eight independent positive/negative scenarios, Page Object Model, accessibility-first locators, and GitHub Actions CI. No production systems or private project data are involved.

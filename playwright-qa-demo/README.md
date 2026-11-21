@@ -25,6 +25,10 @@ For an interactive runner: `npm run test:ui`.
 | QA-002 | Double booking | Occupied slot is rejected |
 | QA-003 | Required fields | Missing customer name is rejected |
 | QA-004 | Date validation | Past appointment is rejected |
+| QA-005 | Duplicate submission | Repeated booking is rejected in one session |
+| QA-006 | Input normalization | Whitespace-only customer name is rejected |
+| QA-007 | Required date | Missing appointment date is rejected |
+| QA-008 | Validation order | Missing name takes precedence over occupied slot |
 
 ## Engineering decisions
 
@@ -32,7 +36,7 @@ For an interactive runner: `npm run test:ui`.
 - **POM with boundaries**: `BookingPage` centralizes locators and user actions. Business assertions remain visible in spec files.
 - **Isolated tests**: each test starts with a fresh browser page; the sandbox has no external persistence.
 - **Auto-waiting assertions**: `await expect(locator).toHaveText(...)`, no arbitrary sleeps.
-- **Deterministic inputs**: fixed fictional sample dates/slots; a known occupied slot is seeded on page load.
+- **Deterministic inputs**: fictional sample dates/slots, with actual date validation against the current time; a known occupied slot is seeded on page load.
 - **CI diagnostics**: HTML report and traces/screenshots/video retained on failures, artifacts uploaded even if tests fail.
 - **Fail-fast hygiene**: `forbidOnly` in CI, TypeScript strict checks, pinned dependency versions via `package-lock.json`.
 
