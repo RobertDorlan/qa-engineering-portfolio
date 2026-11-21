@@ -1,0 +1,34 @@
+name: Playwright QA Demo
+on:
+  push:
+    branches: [main]
+    paths: ['playwright-qa-demo/**', '.github/workflows/playwright-qa-demo.yml']
+  pull_request:
+    paths: ['playwright-qa-demo/**', '.github/workflows/playwright-qa-demo.yml']
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: playwright-qa-demo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: playwright-qa-demo/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run typecheck
+      - run: npm test
+      - name: Upload test report and traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-qa-demo-report
+          path: |
+            playwright-qa-demo/playwright-report/
+            playwright-qa-demo/test-results/
+          retention-days: 14
