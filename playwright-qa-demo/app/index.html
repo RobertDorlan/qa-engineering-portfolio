@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Booking QA Sandbox</title><style>body{font:16px system-ui,sans-serif;background:#f1f7f2;color:#193a33;max-width:600px;margin:5vh auto;padding:24px}main{background:white;border:1px solid #d6e7db;border-radius:18px;padding:28px}label{display:block;margin-top:16px;font-weight:600}input,button{font:inherit;padding:10px;width:100%;box-sizing:border-box;margin-top:5px}button{margin-top:20px;background:#344d41;color:white;border:0;border-radius:8px;cursor:pointer}#result{margin-top:20px;white-space:pre-wrap}small{color:#557060}</style></head><body><main><h1>Booking QA Sandbox</h1><p>Fictional booking form for automated test practice.</p><small>Fictional sample date and slots. No real bookings or external services.</small><form id="booking" novalidate><label for="customer">Customer name</label><input id="customer" name="customer" autocomplete="off"><label for="slot">Appointment slot</label><input id="slot" name="slot" type="date" value="2030-06-15"><label for="time">Time</label><select id="time" name="time"><option value="10:00">10:00</option><option value="11:00">11:00</option></select><button type="submit">Book appointment</button></form><div id="result" role="status" aria-live="polite"></div></main><script>
+const booked=new Set(['2030-06-15T10:00']);
+document.getElementById('booking').addEventListener('submit',event=>{event.preventDefault();const data=new FormData(event.currentTarget);const name=String(data.get('customer')||'').trim();const day=String(data.get('slot')||'');const time=String(data.get('time')||'');const result=document.getElementById('result');const key=day+'T'+time;
+if(!name){result.textContent='Customer name is required';return}
+const now=new Date();const appointment=new Date(key+':00');
+if(!day||Number.isNaN(appointment.getTime())||appointment<=now){result.textContent='Appointment must be in the future';return}
+if(booked.has(key)){result.textContent='This time slot is already booked';return}
+booked.add(key);result.textContent='Booking confirmed for '+name;
+});
+</script></body></html>
